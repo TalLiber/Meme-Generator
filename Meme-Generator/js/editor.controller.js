@@ -191,7 +191,7 @@ function addListeners() {
         //Listen for resize ev 
     window.addEventListener('resize', () => {
         resizeCanvas()
-        renderCanvas()
+        renderMeme()
     })
 }
 
@@ -245,8 +245,8 @@ function onUp() {
 
 function resizeCanvas() {
     const elContainer = document.querySelector('.canvas-container')
-    gElCanvas.width = elContainer.offsetWidth
-    gElCanvas.height = elContainer.offsetHeight
+    gElCanvas.width = 450
+    gElCanvas.height = 450
 }
 
 function getEvPos(ev) {

@@ -5,6 +5,7 @@ const STORAGE_KEY = 'memeDB'
 var gImgs = []
 var gStickers = []
 var gMeme = {}
+var gTxtFilter = ''
 
 _createImgs()
 _createStickers()
@@ -62,7 +63,7 @@ function switchLines() {
 function addLine(offsetX) {
     gMeme.lines.push({
         txt: '',
-        size: 40,
+        size: 25,
         align: 'center',
         color: '#000000',
         font: 'impact',
@@ -173,11 +174,11 @@ function getStickers() {
 function addSticker(sticker) {
     gMeme.stickers.push({
         img: sticker,
-        size: 50,
+        size: 30,
         offsetX: 50,
         offsetY: 50,
-        width: 50,
-        height: 50
+        width: 30,
+        height: 30
     })
 }
 
@@ -196,14 +197,41 @@ function setSelectedElement(element) {
 function getCurrSticker() {
     return gMeme.stickers[gMeme.selectedStickerIdx]
 }
+
+function _createStickers() {
+    gStickers = [{
+            id: 1,
+            img: '💜'
+        },
+        {
+            id: 2,
+            img: '⭐️'
+        }
+    ]
+}
+
 // GALLERY
 
 function getImgs() {
-    return gImgs
+
+    return _filterImgs()
 }
 
 function setImg(imgId) {
     gMeme.selectedImgId = imgId
+}
+
+function setFilterTxt(txt) {
+    gTxtFilter = txt
+}
+
+function _filterImgs() {
+
+    return gImgs.filter(img => {
+        const include = img.keywords.filter(keyword =>
+            keyword.toLowerCase().includes(gTxtFilter.toLowerCase()))
+        return include.length
+    })
 }
 
 function _createImgs() {
@@ -221,21 +249,40 @@ function _createImgs() {
             id: 3,
             url: '/img/3.jpg',
             keywords: ['cute', 'dogs', 'baby']
-        }
+        },
+        {
+            id: 4,
+            url: '/img/4.jpg',
+            keywords: ['cute', 'dogs', 'baby']
+        },
+        {
+            id: 5,
+            url: '/img/5.jpg',
+            keywords: ['cute', 'dogs', 'baby']
+        },
+        {
+            id: 6,
+            url: '/img/6.jpg',
+            keywords: ['cute', 'dogs', 'baby']
+        },
+        {
+            id: 7,
+            url: '/img/7.jpg',
+            keywords: ['cute', 'dogs', 'baby']
+        },
+        {
+            id: 8,
+            url: '/img/8.jpg',
+            keywords: ['cute', 'dogs', 'baby']
+        },
+        {
+            id: 9,
+            url: '/img/9.jpg',
+            keywords: ['cute', 'dogs', 'baby']
+        },
     ]
 }
 
-function _createStickers() {
-    gStickers = [{
-            id: 1,
-            img: '💜'
-        },
-        {
-            id: 2,
-            img: '⭐️'
-        }
-    ]
-}
 // var gMeme = {
 //     selectedImgId: 1,
 //     selectedLineIdx: 0,

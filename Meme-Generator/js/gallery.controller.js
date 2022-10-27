@@ -17,6 +17,13 @@ function renderImgs() {
     document.querySelector('.imgs-container').innerHTML = strHTMLs
 }
 
+function onSetFilterByTxt(txt) {
+    console.log('Filtering by txt', txt)
+    setFilterTxt(txt)
+    renderImgs()
+}
+
+
 function onImgSelect(prop, isMeme) {
     document.querySelector('.gallery-container').classList.add('hidden')
     document.querySelector('.my-memes-container').classList.add('hidden')
@@ -28,6 +35,7 @@ function onImgSelect(prop, isMeme) {
 function onMyMemes() {
     document.querySelector('.gallery-container').classList.add('hidden')
     document.querySelector('.my-memes-container').classList.remove('hidden')
+    document.querySelector('.editor-container').classList.add('hidden')
 
     renderMyMemes()
 }
@@ -44,4 +52,12 @@ function renderMyMemes() {
     `).join('')
 
     document.querySelector('.my-memes-container').innerHTML = strHTMLs
+}
+
+function onGallery() {
+    document.querySelector('.gallery-container').classList.remove('hidden')
+    document.querySelector('.my-memes-container').classList.add('hidden')
+    document.querySelector('.editor-container').classList.add('hidden')
+
+    renderImgs()
 }
