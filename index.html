@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meme Generator</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer"
+    />
+</head>
+
+<body onload="onInit()">
+    <h1>Meme Generator</h1>
+    <section class="gallery-container">
+        <button onclick="onMyMemes()">My Memes</button>
+        <section class="imgs-container"></section>
+    </section>
+
+    <section class="editor-container hidden">
+        <div class="canvas-container">
+            <canvas id="my-canvas" height="450" width="450" onclick="draw(event)"></canvas>
+        </div>
+
+        <input class="txt-input" type="text" oninput="onChangeText(this.value)" placeholder="Enter Text" value="">
+
+        <label> 
+            Color
+            <input class="color-input" oninput="onChangeColor(this.value)" type="color" name="color" value="#000000">
+        </label>
+
+        <select class="font-select" onchange="onChangeFont(this.value)">
+            <option value="impact">Impact</option>
+            <option value="ruluko">Ruluko</option>
+            <option value="ariel">Ariel</option>
+        </select>
+
+        <button onclick="onDecreaseSize()">-</button>
+        <button onclick="onIncreaseSize()">+</button>
+        <button onclick="onMoveLeft()"><-</button>
+        <button onclick="onMoveRight()">-></button>
+        <button onclick="onSwitchLine()">switch line</button>
+        <button onclick="onAddLine()">Add line</button>
+        <button onclick="onRemoveLine()">Remove line</button>
+        <button onclick="onSaveMeme()">Save</button>
+        <section class="stickers-container"></section>
+
+    </section>
+
+    <section class="my-memes-container"></section>
+
+    <script src="js/services/util.service.js"></script>
+    <script src="js/services/storage.service.js"></script>
+    <!-- <script src="js/services/i18n.service.js"></script> -->
+    <script src="js/services/memes.service.js"></script>
+    <script src="js/gallery.controller.js"></script>
+    <script src="js/editor.controller.js"></script>
+</body>
+
+</html>
