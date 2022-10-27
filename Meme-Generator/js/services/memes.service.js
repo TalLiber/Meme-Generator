@@ -15,6 +15,7 @@ _createStickers()
 function createMeme(prop, isMeme) {
     if (isMeme) gMeme = setMemeById(prop)
     else gMeme = {
+        url: '',
         selectedImgId: prop,
         selectedElement: '',
         selectedLineIdx: 0,
@@ -37,6 +38,7 @@ function getMemesStickers() {
 }
 
 function getImgURL(currMeme = gMeme) {
+    if (currMeme.url) return currMeme.url
     const currImg = gImgs.find(img => currMeme.selectedImgId === img.id)
     return currImg.url
 }
@@ -87,13 +89,29 @@ function moveLineRight() {
     gMeme.lines[gMeme.selectedLineIdx].offsetX += 3
 }
 
-function removeLine() {
-    if (gMeme.selectedLineIdx === gMeme.lines.length - 1) gMeme.selectedLineIdx = 0
-    else gMeme.selectedLineIdx += 1
-    gMeme.lines.splice(gMeme.selectedLineIdx, 1)
+function removeElement() {
+    console.log('rem');
+    if (gMeme.selectedElement === '') return
+
+    var tempIdx
+
+    if (gMeme.selectedElement === 'line') {
+        // if (gMeme.selectedLineIdx === gMeme.lines.length - 1) tempIdx = 0
+        // else tempIdx = gMeme.selectedLineIdx + 1
+        gMeme.lines.splice(gMeme.selectedLineIdx, 1)
+            // gMeme.selectedLineIdx = tempIdx
+    } else {
+        // if (gMeme.selectedStickerIdx === gMeme.stickers.length - 1) tempIdx = 0
+        // else tempIdx = gMeme.selectedStickerIdx + 1
+        gMeme.stickers.splice(gMeme.selectedStickerIdx, 1)
+            // gMeme.selectedStickerIdx = tempIdx
+    }
+
+    gMeme.selectedElement = ''
 }
 
-function saveMeme() {
+function saveMeme(newUrl) {
+    gMeme.url = newUrl
     var savedMemes = loadFromStorage(STORAGE_KEY)
     if (!savedMemes) savedMemes = []
 
@@ -113,7 +131,7 @@ function setMemeById(memeId) {
 }
 
 function setTextWidth(txtWidth) {
-    console.log(txtWidth);
+    // console.log(txtWidth);
     gMeme.lines[gMeme.selectedLineIdx].width = txtWidth
 }
 
@@ -134,7 +152,6 @@ function ifElementClicked(clickedPos) {
     }
 
     for (var i = 0; i < gMeme.stickers.length; i++) {
-        console.log(clickedPos.x >= gMeme.stickers[i].offsetX && clickedPos.x <= gMeme.stickers[i].offsetX + gMeme.stickers[i].width && clickedPos.y >= gMeme.stickers[i].offsetY && clickedPos.y <= gMeme.stickers[i].offsetY + gMeme.stickers[i].height)
         if (clickedPos.x >= gMeme.stickers[i].offsetX && clickedPos.x <= gMeme.stickers[i].offsetX + gMeme.stickers[i].width && clickedPos.y >= gMeme.stickers[i].offsetY && clickedPos.y <= gMeme.stickers[i].offsetY + gMeme.stickers[i].height) {
             // console.log(i)
             gMeme.selectedStickerIdx = i
@@ -231,6 +248,14 @@ function _filterImgs() {
         const include = img.keywords.filter(keyword =>
             keyword.toLowerCase().includes(gTxtFilter.toLowerCase()))
         return include.length
+    })
+}
+
+function addImg(url) {
+    gImgs.push({
+        id: 'aa',
+        url,
+        keywords: []
     })
 }
 

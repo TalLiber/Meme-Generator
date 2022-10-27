@@ -24,12 +24,12 @@ function onSetFilterByTxt(txt) {
 }
 
 
-function onImgSelect(prop, isMeme) {
+function onImgSelect(prop, isMeme, width, height) {
     document.querySelector('.gallery-container').classList.add('hidden')
     document.querySelector('.my-memes-container').classList.add('hidden')
     document.querySelector('.editor-container').classList.remove('hidden')
 
-    onOpenEditor(prop, isMeme)
+    onOpenEditor(prop, isMeme, width, height)
 }
 
 function onMyMemes() {
@@ -55,9 +55,40 @@ function renderMyMemes() {
 }
 
 function onGallery() {
+    document.querySelector('.file-input').value = null
+
     document.querySelector('.gallery-container').classList.remove('hidden')
     document.querySelector('.my-memes-container').classList.add('hidden')
     document.querySelector('.editor-container').classList.add('hidden')
 
     renderImgs()
+}
+
+function onClickedFilterItem(item) {
+    const style = window.getComputedStyle(item, null).getPropertyValue('font-size');
+    const currentSize = parseFloat(style);
+    item.style.fontSize = (currentSize + 1) + 'px';
+}
+
+function onImgInput(ev) {
+    loadImageFromInput(ev, loadImg)
+}
+
+function loadImageFromInput(ev, onImageReady) {
+    const reader = new FileReader()
+
+    reader.onload = function(event) {
+        let img = new Image()
+        img.src = event.target.result
+        img.onload = onImageReady.bind(null, img)
+    }
+    reader.readAsDataURL(ev.target.files[0])
+}
+
+function loadImg(img) {
+    const width = img.naturalWidth
+    const height = img.naturalHeight
+
+    addImg(img.src)
+    onImgSelect('aa', false, width, height)
 }

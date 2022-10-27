@@ -11,6 +11,14 @@
     />
 </head>
 
+<div class="modal-container">
+    <div class="modal">
+        <button class="close-btn" onclick="toggleModal()"><i class="fa-solid fa-xmark"></i></button>
+        <a href="#" class="btn" onclick="downloadImg(this)" download="my-img.jpg">Download</a>
+        <div class="share-container"></div>
+    </div>
+</div>
+
 <body onload="onInit()">
     <datalist id="filterList">
         <option value="Movies"/>
@@ -41,11 +49,16 @@
 
                     <nav class="main-nav filter-list">
                         <ul class="flex clean-list">
-                            <li><a href="#" onclick="onClickedFilterItem(this.parentElement)">funny</a></li>
-                            <li><a href="#" onclick="onClickedFilterItem(this.parentElement)">dogs</a></li>
-                            <li><a href="#" onclick="onClickedFilterItem(this.parentElement)">Movies</a></li>
+                            <li><a href="#" onclick="onClickedFilterItem(this)">funny</a></li>
+                            <li><a href="#" onclick="onClickedFilterItem(this)">dogs</a></li>
+                            <li><a href="#" onclick="onClickedFilterItem(this)">Movies</a></li>
                         </ul>
                     </nav>
+                </section>
+                <section class="upload">
+                    <label>Upload Image
+                        <input type="file" class="file-input btn" name="image" onchange="onImgInput(event)" />
+                    </label>
                 </section>
 
                 <section class="imgs-container flex"></section>
@@ -60,12 +73,12 @@
                 </section>
 
                 <section class="edit-container flex">
-                    <input class="txt-input" type="text" oninput="onChangeText(this.value)" placeholder="Enter Text" value="">
+                    <input id="mytext" class="txt-input" type="text" oninput="onChangeText(this.value)" placeholder="Enter Text" value="">
 
                     <section class="line line-1">
                         <button onclick="onSwitchLine()"><i class="fa-solid fa-arrows-rotate"></i></button>
                         <button onclick="onAddLine()"><i class="fa-solid fa-plus"></i></button>
-                        <button onclick="onRemoveLine()"><i class="fa-solid fa-trash"></i></button>
+                        <button onclick="onRemoveElement()"><i class="fa-solid fa-trash"></i></button>
                     </section>
 
                     <section class="line line-2">
@@ -88,7 +101,7 @@
                     <section class="stickers-container line "></section>
 
                     <button onclick="onSaveMeme()">Save</button>
-
+                    <button onclick="uploadImg(); clearBorder()"><i class="fa-solid fa-share-nodes"></i></button>
 
                     <!-- <button onclick="onMoveLeft()"><-</button>
                     <button onclick="onMoveRight()">-></button> -->
