@@ -5,6 +5,7 @@ const STORAGE_KEY = 'memeDB'
 var gImgs = []
 var gStickers = []
 var gMeme = {}
+var gTxtFilter = ''
 
 _createImgs()
 _createStickers()
@@ -14,7 +15,9 @@ _createStickers()
 function createMeme(prop, isMeme) {
     if (isMeme) gMeme = setMemeById(prop)
     else gMeme = {
+        url: '',
         selectedImgId: prop,
+        selectedElement: '',
         selectedLineIdx: 0,
         selectedStickerIdx: 0,
         lines: [],
@@ -35,6 +38,7 @@ function getMemesStickers() {
 }
 
 function getImgURL(currMeme = gMeme) {
+    if (currMeme.url) return currMeme.url
     const currImg = gImgs.find(img => currMeme.selectedImgId === img.id)
     return currImg.url
 }
@@ -47,12 +51,10 @@ function setTextColor(color) {
     gMeme.lines[gMeme.selectedLineIdx].color = color
 }
 
-function increaseFontSize() {
-    gMeme.lines[gMeme.selectedLineIdx].size += 0.5
-}
-
-function decreaseFontSize() {
-    gMeme.lines[gMeme.selectedLineIdx].size -= 0.5
+function changeFontSize(change) {
+    if (!gMeme.selectedElement) return
+    else if (gMeme.selectedElement === 'line') gMeme.lines[gMeme.selectedLineIdx].size += change
+    else gMeme.stickers[gMeme.selectedStickerIdx].size += change
 }
 
 function switchLines() {
@@ -63,10 +65,10 @@ function switchLines() {
 function addLine(offsetX) {
     gMeme.lines.push({
         txt: '',
-        size: 20,
+        size: 25,
         align: 'center',
         color: '#000000',
-        font: 'ariel',
+        font: 'impact',
         offsetX,
         offsetY: 100,
         width: 0,
@@ -87,13 +89,29 @@ function moveLineRight() {
     gMeme.lines[gMeme.selectedLineIdx].offsetX += 3
 }
 
-function removeLine() {
-    if (gMeme.selectedLineIdx === gMeme.lines.length - 1) gMeme.selectedLineIdx = 0
-    else gMeme.selectedLineIdx += 1
-    gMeme.lines.splice(gMeme.selectedLineIdx, 1)
+function removeElement() {
+    console.log('rem');
+    if (gMeme.selectedElement === '') return
+
+    var tempIdx
+
+    if (gMeme.selectedElement === 'line') {
+        // if (gMeme.selectedLineIdx === gMeme.lines.length - 1) tempIdx = 0
+        // else tempIdx = gMeme.selectedLineIdx + 1
+        gMeme.lines.splice(gMeme.selectedLineIdx, 1)
+            // gMeme.selectedLineIdx = tempIdx
+    } else {
+        // if (gMeme.selectedStickerIdx === gMeme.stickers.length - 1) tempIdx = 0
+        // else tempIdx = gMeme.selectedStickerIdx + 1
+        gMeme.stickers.splice(gMeme.selectedStickerIdx, 1)
+            // gMeme.selectedStickerIdx = tempIdx
+    }
+
+    gMeme.selectedElement = ''
 }
 
-function saveMeme() {
+function saveMeme(newUrl) {
+    gMeme.url = newUrl
     var savedMemes = loadFromStorage(STORAGE_KEY)
     if (!savedMemes) savedMemes = []
 
@@ -113,6 +131,7 @@ function setMemeById(memeId) {
 }
 
 function setTextWidth(txtWidth) {
+    // console.log(txtWidth);
     gMeme.lines[gMeme.selectedLineIdx].width = txtWidth
 }
 
@@ -124,18 +143,19 @@ function ifElementClicked(clickedPos) {
     for (var i = 0; i < gMeme.lines.length; i++) {
         // console.log(clickedPos.x >= gMeme.lines[i].offsetX && clickedPos.x <= gMeme.lines[i].offsetX + gMeme.lines[i].width && clickedPos.y >= gMeme.lines[i].offsetY && clickedPos.y <= gMeme.lines[i].offsetY + gMeme.lines[i].height)
         if (clickedPos.x >= gMeme.lines[i].offsetX && clickedPos.x <= gMeme.lines[i].offsetX + gMeme.lines[i].width && clickedPos.y >= gMeme.lines[i].offsetY && clickedPos.y <= gMeme.lines[i].offsetY + gMeme.lines[i].height) {
-            console.log(i)
+            // console.log(i)
             gMeme.selectedLineIdx = i
+            gMeme.selectedElement = 'line'
             return 'line'
         }
 
     }
 
     for (var i = 0; i < gMeme.stickers.length; i++) {
-        console.log(clickedPos.x >= gMeme.stickers[i].offsetX && clickedPos.x <= gMeme.stickers[i].offsetX + gMeme.stickers[i].width && clickedPos.y >= gMeme.stickers[i].offsetY && clickedPos.y <= gMeme.stickers[i].offsetY + gMeme.stickers[i].height)
         if (clickedPos.x >= gMeme.stickers[i].offsetX && clickedPos.x <= gMeme.stickers[i].offsetX + gMeme.stickers[i].width && clickedPos.y >= gMeme.stickers[i].offsetY && clickedPos.y <= gMeme.stickers[i].offsetY + gMeme.stickers[i].height) {
-            console.log(i)
+            // console.log(i)
             gMeme.selectedStickerIdx = i
+            gMeme.selectedElement = 'sticker'
             return 'sticker'
         }
 
@@ -171,21 +191,72 @@ function getStickers() {
 function addSticker(sticker) {
     gMeme.stickers.push({
         img: sticker,
-        size: 50,
+        size: 30,
         offsetX: 50,
         offsetY: 50,
-        width: 50,
-        height: 50
+        width: 30,
+        height: 30
     })
 }
+
+function clearSelection() {
+    gMeme.selectedElement = ''
+}
+
+function getSelectedElement() {
+    return gMeme.selectedElement
+}
+
+function setSelectedElement(element) {
+    gMeme.selectedElement = element
+}
+
+function getCurrSticker() {
+    return gMeme.stickers[gMeme.selectedStickerIdx]
+}
+
+function _createStickers() {
+    gStickers = [{
+            id: 1,
+            img: '💜'
+        },
+        {
+            id: 2,
+            img: '⭐️'
+        }
+    ]
+}
+
 // GALLERY
 
 function getImgs() {
-    return gImgs
+
+    return _filterImgs()
 }
 
 function setImg(imgId) {
     gMeme.selectedImgId = imgId
+}
+
+function setFilterTxt(txt) {
+    gTxtFilter = txt
+}
+
+function _filterImgs() {
+
+    return gImgs.filter(img => {
+        const include = img.keywords.filter(keyword =>
+            keyword.toLowerCase().includes(gTxtFilter.toLowerCase()))
+        return include.length
+    })
+}
+
+function addImg(url) {
+    gImgs.push({
+        id: 'aa',
+        url,
+        keywords: []
+    })
 }
 
 function _createImgs() {
@@ -203,21 +274,40 @@ function _createImgs() {
             id: 3,
             url: '/img/3.jpg',
             keywords: ['cute', 'dogs', 'baby']
-        }
+        },
+        {
+            id: 4,
+            url: '/img/4.jpg',
+            keywords: ['cute', 'dogs', 'baby']
+        },
+        {
+            id: 5,
+            url: '/img/5.jpg',
+            keywords: ['cute', 'dogs', 'baby']
+        },
+        {
+            id: 6,
+            url: '/img/6.jpg',
+            keywords: ['cute', 'dogs', 'baby']
+        },
+        {
+            id: 7,
+            url: '/img/7.jpg',
+            keywords: ['cute', 'dogs', 'baby']
+        },
+        {
+            id: 8,
+            url: '/img/8.jpg',
+            keywords: ['cute', 'dogs', 'baby']
+        },
+        {
+            id: 9,
+            url: '/img/9.jpg',
+            keywords: ['cute', 'dogs', 'baby']
+        },
     ]
 }
 
-function _createStickers() {
-    gStickers = [{
-            id: 1,
-            img: '💜'
-        },
-        {
-            id: 2,
-            img: '⭐️'
-        }
-    ]
-}
 // var gMeme = {
 //     selectedImgId: 1,
 //     selectedLineIdx: 0,

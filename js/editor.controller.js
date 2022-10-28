@@ -4,19 +4,18 @@
 //TODO font doesn't render after reload
 //TODO text align
 //TODO shorthandIf line 215
+//TODO share download 
 
 //? grabbing pointer
 
 const TOUCH_EVS = ['touchstart', 'touchmove', 'touchend']
 
-let gElCanvas
-let gCtx
+let gElCanvas = document.querySelector('canvas')
+let gCtx = gElCanvas.getContext('2d')
 let gElementDrag = ''
 
-function onOpenEditor(prop, isMeme) {
-    gElCanvas = document.querySelector('canvas')
-    gCtx = gElCanvas.getContext('2d')
-
+function onOpenEditor(prop, isMeme, width, height) {
+    resizeCanvas(width, height)
     createMeme(prop, isMeme)
     addListeners()
     renderMeme()
@@ -34,7 +33,7 @@ function renderMeme() {
         gCtx.drawImage(memeImg, 0, 0, gElCanvas.width, gElCanvas.height)
             //!! can I take this out?!
         renderText(meme)
-        addLineBorder(meme)
+        addBorderLine(meme)
         renderStickers()
     }
 
@@ -42,10 +41,11 @@ function renderMeme() {
 }
 
 function renderStickers() {
+    // console.log('hi');
     const stickers = getMemesStickers()
 
     stickers.forEach((sticker) => {
-        console.log(sticker);
+        // console.log(sticker);
         drawText(sticker.img, sticker.offsetX, sticker.offsetY, sticker.size)
     })
 }
@@ -70,15 +70,18 @@ function renderStickersBtns() {
 // }
 function onStickerBtn(sticker) {
     addSticker(sticker)
+    setSelectedElement('sticker')
     renderMeme()
 }
 
-function addLineBorder(meme) {
-    if (!meme.lines.length) return
-    const currLine = getCurrLine()
-    gCtx.font = `${currLine.size}px ${currLine.font}`
+function addBorderLine(meme) {
+    // if (!meme.lines.length) return //! REMOVE MEME PROPERTY
+    const selectedElement = getSelectedElement()
+    if (!selectedElement) return
+    const currElement = (selectedElement === 'line') ? getCurrLine() : getCurrSticker()
+    gCtx.font = `${currElement.size}px ${currElement.font}`
     gCtx.strokeStyle = 'black'
-    gCtx.strokeRect(currLine.offsetX - 10, currLine.offsetY - 10, currLine.width + 20, currLine.height + 20)
+    gCtx.strokeRect(currElement.offsetX - 10, currElement.offsetY - 10, currElement.width + 20, currElement.height + 20)
 }
 
 function renderText(meme) {
@@ -87,9 +90,8 @@ function renderText(meme) {
     })
 }
 
-function drawText(text, x, y, textSize, textColor = '#000000', textFont = 'ariel') {
+function drawText(text, x, y, textSize, textColor = '#000000', textFont = 'impact') {
     //TODO: add stroke
-    console.log(textSize);
     gCtx.lineWidth = 2
         // gCtx.strokeStyle = 'brown'
     gCtx.fillStyle = textColor
@@ -106,6 +108,7 @@ function onChangeText(txt) {
     const currMeme = getMeme()
     if (!currMeme.lines.length) addLine((gElCanvas.width / 2))
     setLineTxt(txt)
+    setSelectedElement('line')
     _updateWidtHeight()
     renderMeme()
 }
@@ -123,13 +126,13 @@ function onChangeColor(color) {
 }
 
 function onIncreaseSize() {
-    increaseFontSize()
+    changeFontSize(0.5)
     _updateWidtHeight()
     renderMeme()
 }
 
 function onDecreaseSize() {
-    decreaseFontSize()
+    changeFontSize(-0.5)
     _updateWidtHeight()
     renderMeme()
 }
@@ -159,13 +162,16 @@ function onMoveRight() {
     renderMeme()
 }
 
-function onRemoveLine() {
-    removeLine()
+function onRemoveElement() {
+    removeElement()
     renderMeme()
 }
 
 function onSaveMeme() {
-    saveMeme()
+    clearBorder()
+
+    const imgDataUrl = gElCanvas.toDataURL("image/jpeg")
+    saveMeme(imgDataUrl)
 }
 
 function _updateInputs(meme) {
@@ -187,7 +193,7 @@ function addListeners() {
         //Listen for resize ev 
     window.addEventListener('resize', () => {
         resizeCanvas()
-        renderCanvas()
+        renderMeme()
     })
 }
 
@@ -204,14 +210,14 @@ function addTouchListeners() {
 }
 
 function onDown(ev) {
-    console.log('Im from onDown')
-        //Get the ev pos from mouse or touch
+    // console.log('Im from onDown')
     const pos = getEvPos(ev)
-        // console.log(isElementClicked(pos));
     const element = ifElementClicked(pos)
-    console.log(element);
-    if (!element) return
-    console.log(gMeme.selectedLineIdx);
+    if (!element) {
+        clearBorder()
+        return
+    }
+
 
     if (element === 'line') gElementDrag = 'line'
     if (element === 'sticker') gElementDrag = 'sticker'
@@ -219,7 +225,7 @@ function onDown(ev) {
 }
 
 function onMove(ev) {
-    console.log('Im from onMove')
+    // console.log('Im from onMove')
 
     if (!gElementDrag) return
     const pos = getEvPos(ev)
@@ -230,15 +236,23 @@ function onMove(ev) {
 }
 
 function onUp() {
-    console.log('Im from onUp')
+    // console.log('Im from onUp')
     gElementDrag = ''
     document.body.style.cursor = 'grab'
+    if (getSelectedElement()) document.querySelector('.txt-input').focus()
 }
 
-function resizeCanvas() {
-    const elContainer = document.querySelector('.canvas-container')
-    gElCanvas.width = elContainer.offsetWidth
-    gElCanvas.height = elContainer.offsetHeight
+function newImage(url) {
+    const img = new Image();
+    img.src = url
+    console.log(img.naturalWidth);
+    console.log(img.naturalHeight);
+}
+
+function resizeCanvas(width, height) {
+    gElCanvas.width = 450
+    if (!width) gElCanvas.height = 450
+    else gElCanvas.height = ((450 * height) / width)
 }
 
 function getEvPos(ev) {
@@ -261,4 +275,51 @@ function getEvPos(ev) {
         }
     }
     return pos
+}
+
+function uploadImg() {
+    const imgDataUrl = gElCanvas.toDataURL("image/jpeg")
+
+    function onSuccess(uploadedImgUrl) {
+        const encodedUploadedImgUrl = encodeURIComponent(uploadedImgUrl)
+        toggleModal()
+        document.querySelector('.share-container').innerHTML = `
+          <a class="btn" href="https://www.facebook.com/sharer/sharer.php?u=${encodedUploadedImgUrl}&t=${encodedUploadedImgUrl}" title="Share on Facebook" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=${uploadedImgUrl}&t=${uploadedImgUrl}'); return false;">
+            Share on Facebook   
+          </a>`
+    }
+    // Send the image to the server
+    doUploadImg(imgDataUrl, onSuccess)
+}
+
+function doUploadImg(imgDataUrl, onSuccess) {
+    const formData = new FormData()
+    formData.append('img', imgDataUrl)
+
+    const XHR = new XMLHttpRequest()
+    XHR.onreadystatechange = () => {
+        if (XHR.readyState !== XMLHttpRequest.DONE) return
+        if (XHR.status !== 200) return console.error('Error uploading image')
+        const { responseText: url } = XHR
+        onSuccess(url)
+    }
+    XHR.onerror = (req, ev) => {
+        console.error('Error connecting to server with request:', req, '\nGot response data:', ev)
+    }
+    XHR.open('POST', '//ca-upload.com/here/upload.php')
+    XHR.send(formData)
+}
+
+function toggleModal() {
+    document.body.classList.toggle('modal-open')
+}
+
+function downloadImg(elLink) {
+    const imgContent = gElCanvas.toDataURL('image/jpeg')
+    elLink.href = imgContent
+}
+
+function clearBorder() {
+    clearSelection()
+    renderMeme()
 }
