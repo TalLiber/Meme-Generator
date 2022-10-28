@@ -8,6 +8,12 @@
 
 //? grabbing pointer
 
+var gShareData = {
+    title: 'Meme',
+    text: 'My Meme',
+    url: ''
+}
+
 const TOUCH_EVS = ['touchstart', 'touchmove', 'touchend']
 
 let gElCanvas = document.querySelector('canvas')
@@ -195,6 +201,18 @@ function addListeners() {
         resizeCanvas()
         renderMeme()
     })
+
+    const btn = document.querySelector('.share-btn');
+    btn.addEventListener('click', async() => {
+        try {
+            await navigator.share(gShareData);
+            console.log(gShareData);
+            console.log('success')
+        } catch (err) {
+            console.log(`Error: ${err}`)
+        }
+    });
+
 }
 
 function addMouseListeners() {
@@ -213,11 +231,11 @@ function onDown(ev) {
     // console.log('Im from onDown')
     const pos = getEvPos(ev)
     const element = ifElementClicked(pos)
+
     if (!element) {
         clearBorder()
         return
     }
-
 
     if (element === 'line') gElementDrag = 'line'
     if (element === 'sticker') gElementDrag = 'sticker'
@@ -279,6 +297,8 @@ function getEvPos(ev) {
 
 function uploadImg() {
     const imgDataUrl = gElCanvas.toDataURL("image/jpeg")
+    gShareData.url = imgDataUrl
+    console.log(imgDataUrl);
 
     function onSuccess(uploadedImgUrl) {
         const encodedUploadedImgUrl = encodeURIComponent(uploadedImgUrl)

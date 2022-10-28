@@ -262,47 +262,47 @@ function addImg(url) {
 function _createImgs() {
     gImgs = [{
             id: 1,
-            url: '/img/1.jpg',
+            url: 'img/1.jpg',
             keywords: ['funny']
         },
         {
             id: 2,
-            url: '/img/2.jpg',
+            url: 'img/2.jpg',
             keywords: ['cute', 'dogs']
         },
         {
             id: 3,
-            url: '/img/3.jpg',
+            url: 'img/3.jpg',
             keywords: ['cute', 'dogs', 'baby']
         },
         {
             id: 4,
-            url: '/img/4.jpg',
+            url: 'img/4.jpg',
             keywords: ['cute', 'dogs', 'baby']
         },
         {
             id: 5,
-            url: '/img/5.jpg',
+            url: 'img/5.jpg',
             keywords: ['cute', 'dogs', 'baby']
         },
         {
             id: 6,
-            url: '/img/6.jpg',
+            url: 'img/6.jpg',
             keywords: ['cute', 'dogs', 'baby']
         },
         {
             id: 7,
-            url: '/img/7.jpg',
+            url: 'img/7.jpg',
             keywords: ['cute', 'dogs', 'baby']
         },
         {
             id: 8,
-            url: '/img/8.jpg',
+            url: 'img/8.jpg',
             keywords: ['cute', 'dogs', 'baby']
         },
         {
             id: 9,
-            url: '/img/9.jpg',
+            url: 'img/9.jpg',
             keywords: ['cute', 'dogs', 'baby']
         },
     ]
