@@ -1,15 +1,15 @@
 @font-face {
-    src: url(/fonts/Impact/impact.ttf);
+    src: url(fonts/Impact/impact.ttf);
     font-family: impact;
 }
 
 @font-face {
-    src: url(/fonts/Ruluko/Ruluko-Regular.ttf);
+    src: url(fonts/Ruluko/Ruluko-Regular.ttf);
     font-family: ruluko;
 }
 
 @font-face {
-    src: url(/fonts/Berlingsdemo/Berlingsdemo.ttf);
+    src: url(fonts/Berlingsdemo/Berlingsdemo.ttf);
     font-family: berlingsdemo;
 }
 
