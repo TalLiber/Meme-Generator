@@ -28,6 +28,7 @@
     </datalist>
 
     <section class="main-layout flex">
+        <div class="main-screen" onclick="toggleMenu()"></div>
 
         <header class="header-container flex">
             <div class="logo">MemeGen</div>
@@ -39,6 +40,7 @@
                     <li><a href="#" onclick="onClickedNavItem(this.parentElement)">About</a></li>
                 </ul>
             </nav>
+            <button type="button" class="btn-menu" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></button>
 
         </header>
 
@@ -47,38 +49,38 @@
             <!-- GALLERY -->
 
             <section class="gallery-container flex">
-                <div class="scroll-container">
-                    <div class="scroll-area">
-                        <section class="hero flex">
-                            <div class="hero-text">
-                                <h1>Make memes for free in minutes.</h1>
-                                <h2>The meme creator helps you make your own meme for any occasion. Customize your meme with free images, fonts, and more.</h2>
-                                <div class="start-meme">Scroll to start</div>
-                            </div>
-                            <div class="hero-sample">
-                                <img src="img/static/sample.jpg">
-                            </div>
-                        </section>
+                <!-- <div class="scroll-container">
+                    <div class="scroll-area"> -->
+                <section class="hero">
+                    <div class="hero-text">
+                        <h1>Make memes for free in minutes.</h1>
+                        <h2>The meme creator helps you make your own meme for any occasion. Customize your meme with free images, fonts, and more.</h2>
+                        <div class="start-meme">Scroll to start</div>
                     </div>
-                    <div class="scroll-area">
-                        <section class="filter-container flex space-between">
-                            <label>
+                    <div class="hero-sample">
+                        <img src="img/static/sample.jpg">
+                    </div>
+                </section>
+                <!-- </div>
+                    <div class="scroll-area"> -->
+                <section class="filter-container flex space-between">
+                    <label>
                         <input class="filter-input" type="text" name="contact" oninput="onSetFilterByTxt(this.value)" list="filterList" placeholder="Enter search keyword" /> <i class="fa-solid fa-magnifying-glass"></i>
                     </label>
 
-                            <nav class="filter-list">
-                                <ul class="flex clean-list space-between">
-                                    <li><a href="#" onclick="onClickedFilterItem(this)">funny</a></li>
-                                    <li><a class="demo-size-dogs" href="#" onclick="onClickedFilterItem(this)">dogs</a></li>
-                                    <li><a class="demo-size-movies" href="#" onclick="onClickedFilterItem(this)">Movies</a></li>
-                                    <li><a href="#" onclick="onClickedFilterItem(this)">Baby</a></li>
-                                    <li><a class="demo-size-politics" href="#" onclick="onClickedFilterItem(this)">Politics</a></li>
-                                </ul>
-                            </nav>
-                        </section>
-                        <section class="imgs-container grid"></section>
-                    </div>
-                </div>
+                    <nav class="filter-list">
+                        <ul class="flex clean-list space-between">
+                            <li><a href="#" onclick="onClickedFilterItem(this)">funny</a></li>
+                            <li><a class="demo-size-dogs" href="#" onclick="onClickedFilterItem(this)">dogs</a></li>
+                            <li><a class="demo-size-movies" href="#" onclick="onClickedFilterItem(this)">Movies</a></li>
+                            <li><a href="#" onclick="onClickedFilterItem(this)">Baby</a></li>
+                            <li><a class="demo-size-politics" href="#" onclick="onClickedFilterItem(this)">Politics</a></li>
+                        </ul>
+                    </nav>
+                </section>
+                <section class="imgs-container grid"></section>
+                <!-- </div>
+                </div> -->
             </section>
         </section>
         <section class="my-memes-container grid"></section>
