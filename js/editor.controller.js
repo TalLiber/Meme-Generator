@@ -11,7 +11,7 @@
 var gShareData = {
     title: 'Meme',
     text: 'My Meme',
-    url: ''
+    url: 'https://developer.mozilla.org'
 }
 
 const TOUCH_EVS = ['touchstart', 'touchmove', 'touchend']
@@ -20,8 +20,7 @@ let gElCanvas = document.querySelector('canvas')
 let gCtx = gElCanvas.getContext('2d')
 let gElementDrag = ''
 
-function onOpenEditor(prop, isMeme, width, height) {
-    resizeCanvas(width, height)
+function onOpenEditor(prop, isMeme) {
     createMeme(prop, isMeme)
     addListeners()
     renderMeme()
@@ -29,29 +28,31 @@ function onOpenEditor(prop, isMeme, width, height) {
 }
 
 function renderMeme() {
-    // drawImage()
     const meme = getMeme()
 
     const memeImg = new Image()
     memeImg.src = getImgURL()
 
-    memeImg.onload = function() {
-        gCtx.drawImage(memeImg, 0, 0, gElCanvas.width, gElCanvas.height)
-            //!! can I take this out?!
-        renderText(meme)
-        addBorderLine(meme)
-        renderStickers()
-    }
+    return new Promise(resolve => {
+        memeImg.onload = function() {
+            resizeCanvas(memeImg.naturalWidth, memeImg.naturalHeight)
 
-    _updateInputs(meme)
+            gCtx.drawImage(memeImg, 0, 0, gElCanvas.width, gElCanvas.height)
+            renderText(meme)
+            addBorderLine(meme)
+            renderStickers()
+
+            resolve('resolved')
+        }
+        _updateInputs(meme)
+    })
+
 }
 
 function renderStickers() {
-    // console.log('hi');
     const stickers = getMemesStickers()
 
     stickers.forEach((sticker) => {
-        // console.log(sticker);
         drawText(sticker.img, sticker.offsetX, sticker.offsetY, sticker.size)
     })
 }
@@ -65,23 +66,14 @@ function renderStickersBtns() {
 
     document.querySelector('.stickers-container').innerHTML = strHTMLs
 }
-// function drawImage() {
-//     const memeImg = new Image()
-//     memeImg.src = '/img/1.jpg'
 
-//     memeImg.onload = function() {
-//         gCtx.drawImage(memeImg, 0, 0, gElCanvas.width, gElCanvas.height)
-//         drawText('text', 50, 50)
-//     }
-// }
 function onStickerBtn(sticker) {
     addSticker(sticker)
     setSelectedElement('sticker')
     renderMeme()
 }
 
-function addBorderLine(meme) {
-    // if (!meme.lines.length) return //! REMOVE MEME PROPERTY
+function addBorderLine() {
     const selectedElement = getSelectedElement()
     if (!selectedElement) return
     const currElement = (selectedElement === 'line') ? getCurrLine() : getCurrSticker()
@@ -173,8 +165,9 @@ function onRemoveElement() {
     renderMeme()
 }
 
-function onSaveMeme() {
+async function onSaveMeme() {
     clearBorder()
+    await renderMeme();
 
     const imgDataUrl = gElCanvas.toDataURL("image/jpeg")
     saveMeme(imgDataUrl)
@@ -275,7 +268,6 @@ function resizeCanvas(width, height) {
 
 function getEvPos(ev) {
 
-    //Gets the offset pos , the default pos
     let pos = {
             x: ev.offsetX,
             y: ev.offsetY

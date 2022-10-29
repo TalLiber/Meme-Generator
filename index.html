@@ -27,7 +27,8 @@
         <option value="Politics"/>
     </datalist>
 
-    <section class="main-layout">
+    <section class="main-layout flex">
+
         <header class="header-container flex">
             <div class="logo">MemeGen</div>
 
@@ -38,87 +39,100 @@
                     <li><a href="#" onclick="onClickedNavItem(this.parentElement)">About</a></li>
                 </ul>
             </nav>
+
         </header>
 
         <section class="main-container flex">
 
             <!-- GALLERY -->
 
-            <section class="gallery-container">
-
-                <section class="filter-container flex space-between">
-                    <label>
+            <section class="gallery-container flex">
+                <div class="scroll-container">
+                    <div class="scroll-area">
+                        <section class="hero flex">
+                            <div class="hero-text">
+                                <h1>Make memes for free in minutes.</h1>
+                                <h2>The meme creator helps you make your own meme for any occasion. Customize your meme with free images, fonts, and more.</h2>
+                                <div class="start-meme">Scroll to start</div>
+                            </div>
+                            <div class="hero-sample">
+                                <img src="img/static/sample.jpg">
+                            </div>
+                        </section>
+                    </div>
+                    <div class="scroll-area">
+                        <section class="filter-container flex space-between">
+                            <label>
                         <input class="filter-input" type="text" name="contact" oninput="onSetFilterByTxt(this.value)" list="filterList" placeholder="Enter search keyword" /> <i class="fa-solid fa-magnifying-glass"></i>
                     </label>
 
-                    <nav class="main-nav filter-list">
-                        <ul class="flex clean-list">
-                            <li><a href="#" onclick="onClickedFilterItem(this)">funny</a></li>
-                            <li><a href="#" onclick="onClickedFilterItem(this)">dogs</a></li>
-                            <li><a href="#" onclick="onClickedFilterItem(this)">Movies</a></li>
-                        </ul>
-                    </nav>
-                </section>
-                <section class="upload">
-                    <label>Upload Image
-                        <input type="file" class="file-input btn" name="image" onchange="onImgInput(event)" />
-                    </label>
-
-                </section>
-
-                <section class="imgs-container flex"></section>
+                            <nav class="filter-list">
+                                <ul class="flex clean-list space-between">
+                                    <li><a href="#" onclick="onClickedFilterItem(this)">funny</a></li>
+                                    <li><a class="demo-size-dogs" href="#" onclick="onClickedFilterItem(this)">dogs</a></li>
+                                    <li><a class="demo-size-movies" href="#" onclick="onClickedFilterItem(this)">Movies</a></li>
+                                    <li><a href="#" onclick="onClickedFilterItem(this)">Baby</a></li>
+                                    <li><a class="demo-size-politics" href="#" onclick="onClickedFilterItem(this)">Politics</a></li>
+                                </ul>
+                            </nav>
+                        </section>
+                        <section class="imgs-container grid"></section>
+                    </div>
+                </div>
             </section>
-            <section class="my-memes-container flex"></section>
+        </section>
+        <section class="my-memes-container grid"></section>
 
-            <!-- EDITOR -->
+        <!-- EDITOR -->
 
-            <section class="editor-container flex space-between hidden">
-                <section class="canvas-container">
-                    <canvas id="my-canvas" height="300" width="300" onclick="draw(event)"></canvas>
+        <section class="main-editor-container flex space-between hidden">
+            <section class="edit-container flex">
+                <input id="mytext" class="txt-input" type="text" oninput="onChangeText(this.value)" placeholder="Enter Text" value="">
+
+                <section class="line line-1">
+                    <button onclick="onSwitchLine()"><i class="fa-solid fa-arrows-rotate"></i></button>
+                    <button onclick="onAddLine()"><i class="fa-solid fa-plus"></i></button>
+                    <button onclick="onRemoveElement()"><i class="fa-solid fa-trash"></i></button>
                 </section>
 
-                <section class="edit-container flex">
-                    <input id="mytext" class="txt-input" type="text" oninput="onChangeText(this.value)" placeholder="Enter Text" value="">
+                <section class="line line-2">
+                    <button onclick="onDecreaseSize()"><i class="fa-solid fa-square-minus"></i></button>
+                    <button onclick="onIncreaseSize()"><i class="fa-solid fa-square-plus"></i></button>
+                </section>
 
-                    <section class="line line-1">
-                        <button onclick="onSwitchLine()"><i class="fa-solid fa-arrows-rotate"></i></button>
-                        <button onclick="onAddLine()"><i class="fa-solid fa-plus"></i></button>
-                        <button onclick="onRemoveElement()"><i class="fa-solid fa-trash"></i></button>
-                    </section>
-
-                    <section class="line line-2">
-                        <button onclick="onDecreaseSize()"><i class="fa-solid fa-square-minus"></i></button>
-                        <button onclick="onIncreaseSize()"><i class="fa-solid fa-square-plus"></i></button>
-                    </section>
-
-                    <section class="line line3">
-                        <select class="font-select" onchange="onChangeFont(this.value)">
+                <section class="line line3">
+                    <select class="font-select" onchange="onChangeFont(this.value)">
                             <option value="impact">Impact</option>
                             <option value="ruluko">Ruluko</option>
                             <option value="ariel">Ariel</option>
                         </select>
-                        <label> 
+                    <label> 
                             Color
                             <input class="color-input" oninput="onChangeColor(this.value)" type="color" name="color" value="#000000">
                         </label>
-                    </section>
-
-                    <section class="stickers-container line "></section>
-
-                    <button onclick="onSaveMeme()">Save</button>
-                    <button onclick="uploadImg(); clearBorder()"><i class="fa-solid fa-share-nodes"></i></button>
-
-                    <!-- <button onclick="onMoveLeft()"><-</button>
-                    <button onclick="onMoveRight()">-></button> -->
                 </section>
+
+                <section class="stickers-container line "></section>
+
+                <button onclick="onSaveMeme()">Save</button>
+                <button onclick="uploadImg(); clearBorder()"><i class="fa-solid fa-share-nodes"></i></button>
+
+                <!-- <button onclick="onMoveLeft()"><-</button>
+                    <button onclick="onMoveRight()">-></button> -->
             </section>
 
-            <footer class="flex">
-                <div class="logo">MemeGen</div>
-                <small>all rights reserved 2022</small>
-            </footer>
+            <section class="canvas-container">
+                <canvas id="my-canvas" height="300" width="300"></canvas>
+            </section>
 
         </section>
+
+        <footer class="flex">
+            <div class="logo">MemeGen</div>
+            <small>all rights reserved 2022</small>
+        </footer>
+
+    </section>
     </section>
 
 

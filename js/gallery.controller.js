@@ -8,34 +8,37 @@ function onInit() {
 function renderImgs() {
     const imgs = getImgs()
 
+    const uploadStr = `  
+            <label class="gallery-img upload"><div class="upload-header">Upload Image </div><i class="fa-solid fa-upload"></i>
+                <input type="file" class="file-input btn" name="image" onchange="onImgInput(event)" />
+            </label>
+    `
+
     const strHTMLs = imgs.map(img => `
-        <article class="gallery-img">
-            <img onclick="onImgSelect(${img.id}, false)" src="${img.url}">
-        </article>
+            <img class="gallery-img" onclick="onImgSelect(${img.id}, false)" src="${img.url}">
     `).join('')
 
-    document.querySelector('.imgs-container').innerHTML = strHTMLs
+    document.querySelector('.imgs-container').innerHTML = uploadStr + strHTMLs
 }
 
 function onSetFilterByTxt(txt) {
-    console.log('Filtering by txt', txt)
     setFilterTxt(txt)
     renderImgs()
 }
 
 
-function onImgSelect(prop, isMeme, width, height) {
+function onImgSelect(prop, isMeme) {
     document.querySelector('.gallery-container').classList.add('hidden')
     document.querySelector('.my-memes-container').classList.add('hidden')
-    document.querySelector('.editor-container').classList.remove('hidden')
+    document.querySelector('.main-editor-container').classList.remove('hidden')
 
-    onOpenEditor(prop, isMeme, width, height)
+    onOpenEditor(prop, isMeme)
 }
 
 function onMyMemes() {
     document.querySelector('.gallery-container').classList.add('hidden')
     document.querySelector('.my-memes-container').classList.remove('hidden')
-    document.querySelector('.editor-container').classList.add('hidden')
+    document.querySelector('.main-editor-container').classList.add('hidden')
 
     renderMyMemes()
 }
@@ -46,9 +49,7 @@ function renderMyMemes() {
     if (!myMemes) return
 
     const strHTMLs = myMemes.map(currMeme => `
-        <article class="gallery-img">
-            <img onclick="onImgSelect('${currMeme.id}', 'true')" src="${getImgURL(currMeme.meme)}">
-        </article>
+            <img class="gallery-img" onclick="onImgSelect('${currMeme.id}', 'true')" src="${getImgURL(currMeme.meme)}">
     `).join('')
 
     document.querySelector('.my-memes-container').innerHTML = strHTMLs
@@ -59,7 +60,7 @@ function onGallery() {
 
     document.querySelector('.gallery-container').classList.remove('hidden')
     document.querySelector('.my-memes-container').classList.add('hidden')
-    document.querySelector('.editor-container').classList.add('hidden')
+    document.querySelector('.main-editor-container').classList.add('hidden')
 
     renderImgs()
 }
@@ -86,9 +87,11 @@ function loadImageFromInput(ev, onImageReady) {
 }
 
 function loadImg(img) {
-    const width = img.naturalWidth
-    const height = img.naturalHeight
 
     addImg(img.src)
-    onImgSelect('aa', false, width, height)
+    onImgSelect('aa', false)
+}
+
+function toggleMenu() {
+    document.body.classList.toggle('menu-open');
 }

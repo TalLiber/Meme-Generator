@@ -127,6 +127,7 @@ function setMemeById(memeId) {
     const savedMemes = loadFromStorage(STORAGE_KEY)
 
     const selectedMeme = savedMemes.find(meme => meme.id === memeId)
+    selectedMeme.meme.url = ''
     return selectedMeme.meme
 }
 
@@ -268,22 +269,22 @@ function _createImgs() {
         {
             id: 2,
             url: 'img/2.jpg',
-            keywords: ['cute', 'dogs']
+            keywords: ['cartoon', 'movies']
         },
         {
             id: 3,
             url: 'img/3.jpg',
-            keywords: ['cute', 'dogs', 'baby']
+            keywords: ['celebrity', 'politics']
         },
         {
             id: 4,
             url: 'img/4.jpg',
-            keywords: ['cute', 'dogs', 'baby']
+            keywords: ['cute', 'dogs']
         },
         {
             id: 5,
             url: 'img/5.jpg',
-            keywords: ['cute', 'dogs', 'baby']
+            keywords: ['cute', 'funny', 'baby']
         },
         {
             id: 6,
@@ -293,17 +294,97 @@ function _createImgs() {
         {
             id: 7,
             url: 'img/7.jpg',
-            keywords: ['cute', 'dogs', 'baby']
+            keywords: ['cute', 'cat']
         },
         {
             id: 8,
             url: 'img/8.jpg',
-            keywords: ['cute', 'dogs', 'baby']
+            keywords: ['movies']
         },
         {
             id: 9,
             url: 'img/9.jpg',
-            keywords: ['cute', 'dogs', 'baby']
+            keywords: ['cute', 'funny', 'baby']
+        },
+        {
+            id: 10,
+            url: 'img/10.jpg',
+            keywords: ['celebrity']
+        },
+        {
+            id: 11,
+            url: 'img/11.jpg',
+            keywords: ['funny', 'celebrity']
+        },
+        {
+            id: 12,
+            url: 'img/12.jpg',
+            keywords: ['movies']
+        },
+        {
+            id: 13,
+            url: 'img/13.jpg',
+            keywords: ['movies']
+        },
+        {
+            id: 14,
+            url: 'img/14.jpg',
+            keywords: ['cute', 'funny', 'baby']
+        },
+        {
+            id: 15,
+            url: 'img/15.jpg',
+            keywords: ['politics', 'celebrity']
+        },
+        {
+            id: 16,
+            url: 'img/16.jpg',
+            keywords: ['cute', 'funny', 'baby']
+        },
+        {
+            id: 17,
+            url: 'img/17.jpg',
+            keywords: ['cute', 'dogs', 'funny']
+        },
+        {
+            id: 18,
+            url: 'img/18.jpg',
+            keywords: ['politics', 'celebrity']
+        },
+        {
+            id: 19,
+            url: 'img/19.jpg',
+            keywords: ['movies', 'celebrity']
+        },
+        {
+            id: 20,
+            url: 'img/20.jpg',
+            keywords: ['movies', 'matrix']
+        },
+        {
+            id: 21,
+            url: 'img/21.jpg',
+            keywords: ['movies']
+        },
+        {
+            id: 22,
+            url: 'img/22.jpg',
+            keywords: ['celebrity', 'oprah']
+        },
+        {
+            id: 23,
+            url: 'img/23.jpg',
+            keywords: ['movies', 'funny']
+        },
+        {
+            id: 24,
+            url: 'img/24.jpg',
+            keywords: ['politics', 'putin']
+        },
+        {
+            id: 25,
+            url: 'img/25.jpg',
+            keywords: ['movies', 'toy story', 'buzz']
         },
     ]
 }
