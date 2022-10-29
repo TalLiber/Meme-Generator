@@ -261,9 +261,9 @@ function newImage(url) {
 }
 
 function resizeCanvas(width, height) {
-    gElCanvas.width = 450
-    if (!width) gElCanvas.height = 450
-    else gElCanvas.height = ((450 * height) / width)
+    gElCanvas.width = 350
+    if (!width) gElCanvas.height = 350
+    else gElCanvas.height = ((350 * height) / width)
 }
 
 function getEvPos(ev) {

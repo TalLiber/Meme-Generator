@@ -43,6 +43,16 @@ function onMyMemes() {
     renderMyMemes()
 }
 
+function onGallery() {
+    document.querySelector('.file-input').value = null
+
+    document.querySelector('.gallery-container').classList.remove('hidden')
+    document.querySelector('.my-memes-container').classList.add('hidden')
+    document.querySelector('.main-editor-container').classList.add('hidden')
+
+    renderImgs()
+}
+
 function renderMyMemes() {
     const myMemes = loadFromStorage('memeDB')
 
@@ -55,15 +65,6 @@ function renderMyMemes() {
     document.querySelector('.my-memes-container').innerHTML = strHTMLs
 }
 
-function onGallery() {
-    document.querySelector('.file-input').value = null
-
-    document.querySelector('.gallery-container').classList.remove('hidden')
-    document.querySelector('.my-memes-container').classList.add('hidden')
-    document.querySelector('.main-editor-container').classList.add('hidden')
-
-    renderImgs()
-}
 
 function onClickedFilterItem(item) {
     const style = window.getComputedStyle(item, null).getPropertyValue('font-size');

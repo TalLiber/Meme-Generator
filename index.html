@@ -88,7 +88,7 @@
 
         <!-- EDITOR -->
 
-        <section class="main-editor-container flex space-between hidden">
+        <section class="main-editor-container hidden">
             <section class="edit-container flex">
                 <input id="mytext" class="txt-input" type="text" oninput="onChangeText(this.value)" placeholder="Enter Text" value="">
 
@@ -104,13 +104,15 @@
                 </section>
 
                 <section class="line line3">
+                    <label>Font:
                     <select class="font-select" onchange="onChangeFont(this.value)">
                             <option value="impact">Impact</option>
                             <option value="ruluko">Ruluko</option>
                             <option value="ariel">Ariel</option>
                         </select>
+                    </label>
                     <label> 
-                            Color
+                            Color:
                             <input class="color-input" oninput="onChangeColor(this.value)" type="color" name="color" value="#000000">
                         </label>
                 </section>
