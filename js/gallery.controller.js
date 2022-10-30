@@ -70,6 +70,8 @@ function onClickedFilterItem(item) {
     const style = window.getComputedStyle(item, null).getPropertyValue('font-size');
     const currentSize = parseFloat(style);
     item.style.fontSize = (currentSize + 1) + 'px';
+
+    onSetFilterByTxt(item.innerText)
 }
 
 function onImgInput(ev) {

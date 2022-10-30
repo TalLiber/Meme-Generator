@@ -15,14 +15,15 @@ _createStickers()
 function createMeme(prop, isMeme) {
     if (isMeme) gMeme = setMemeById(prop)
     else gMeme = {
-        url: '',
-        selectedImgId: prop,
-        selectedElement: '',
-        selectedLineIdx: 0,
-        selectedStickerIdx: 0,
-        lines: [],
-        stickers: []
-    }
+            url: '',
+            selectedImgId: prop,
+            selectedElement: '',
+            selectedLineIdx: 0,
+            selectedStickerIdx: 0,
+            lines: [],
+            stickers: []
+        }
+        // addLine('100')
 }
 
 function getMeme() {
@@ -64,13 +65,13 @@ function switchLines() {
 
 function addLine(offsetX) {
     gMeme.lines.push({
-        txt: '',
-        size: 25,
+        txt: 'Enter Text',
+        size: 30,
         align: 'center',
-        color: '#000000',
+        color: '#fff',
         font: 'impact',
         offsetX,
-        offsetY: 100,
+        offsetY: 10,
         width: 0,
         height: 0
     })

@@ -313,6 +313,10 @@ input[type="color"] {
     width: 1.5625em;
 }
 
+.filter-item {
+    cursor: pointer;
+}
+
 .font-select {
     border: none;
     background-color: var(--clr2);
@@ -334,7 +338,7 @@ input[type="color"] {
 }
 
 .gallery-img:hover {
-    box-shadow: 0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff;
+    box-shadow: 0 0 10px #fff;
 }
 
 .my-memes-container {
@@ -357,12 +361,18 @@ input[type="color"] {
     margin: auto;
 }
 
+.border-container {
+    align-items: center;
+    padding: 1.875em;
+}
+
 .edit-container {
     flex-direction: column;
     flex-basis: 50%;
     align-items: center;
     justify-content: center;
     grid-area: down;
+    border: 0.5px solid var(--clr5);
 }
 
 .canvas-container {

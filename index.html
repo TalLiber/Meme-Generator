@@ -56,7 +56,7 @@
                     <div class="hero-text">
                         <h1>Make memes for free in minutes.</h1>
                         <h2>The meme creator helps you make your own meme for any occasion. Customize your meme with free images, fonts, and more.</h2>
-                        <div class="start-meme">Scroll to start</div>
+                        <a href="#start-section" class="start-meme">Scroll to start</a>
                     </div>
                     <div class="hero-sample">
                         <img src="img/static/sample.jpg">
@@ -64,18 +64,18 @@
                 </section>
                 <!-- </div>
                     <div class="scroll-area"> -->
-                <section class="filter-container flex space-between">
+                <section id="start-section" class="filter-container flex space-between">
                     <label>
                         <input class="filter-input" type="text" name="contact" oninput="onSetFilterByTxt(this.value)" list="filterList" placeholder="Enter search keyword" /> <i class="fa-solid fa-magnifying-glass"></i>
                     </label>
 
                     <nav class="filter-list">
                         <ul class="flex clean-list space-between">
-                            <li><a href="#" onclick="onClickedFilterItem(this)">funny</a></li>
-                            <li><a class="demo-size-dogs" href="#" onclick="onClickedFilterItem(this)">dogs</a></li>
-                            <li><a class="demo-size-movies" href="#" onclick="onClickedFilterItem(this)">Movies</a></li>
-                            <li><a href="#" onclick="onClickedFilterItem(this)">Baby</a></li>
-                            <li><a class="demo-size-politics" href="#" onclick="onClickedFilterItem(this)">Politics</a></li>
+                            <li class="filter-item" onclick="onClickedFilterItem(this)">funny</li>
+                            <li class="filter-item demo-size-dogs" href="" onclick="onClickedFilterItem(this)">dogs</li>
+                            <li class="filter-item demo-size-movies" href="" onclick="onClickedFilterItem(this)">Movies</li>
+                            <li class="filter-item" onclick="onClickedFilterItem(this)">Baby</li>
+                            <li class="filter-item demo-size-politics" href="" onclick="onClickedFilterItem(this)">Politics</li>
                         </ul>
                     </nav>
                 </section>
@@ -89,42 +89,44 @@
         <!-- EDITOR -->
 
         <section class="main-editor-container hidden">
-            <section class="edit-container flex">
-                <input id="mytext" class="txt-input" type="text" oninput="onChangeText(this.value)" placeholder="Enter Text" value="">
+            <div class="border-container flex">
+                <section class="edit-container flex">
+                    <input id="mytext" class="txt-input" type="text" oninput="onChangeText(this.value)" placeholder="Enter Text" value="">
 
-                <section class="line line-1">
-                    <button onclick="onSwitchLine()"><i class="fa-solid fa-arrows-rotate"></i></button>
-                    <button onclick="onAddLine()"><i class="fa-solid fa-plus"></i></button>
-                    <button onclick="onRemoveElement()"><i class="fa-solid fa-trash"></i></button>
-                </section>
+                    <section class="line line-1">
+                        <button onclick="onSwitchLine()"><i class="fa-solid fa-arrows-rotate"></i></button>
+                        <button onclick="onAddLine()"><i class="fa-solid fa-plus"></i></button>
+                        <button onclick="onRemoveElement()"><i class="fa-solid fa-trash"></i></button>
+                    </section>
 
-                <section class="line line-2">
-                    <button onclick="onDecreaseSize()"><i class="fa-solid fa-square-minus"></i></button>
-                    <button onclick="onIncreaseSize()"><i class="fa-solid fa-square-plus"></i></button>
-                </section>
+                    <section class="line line-2">
+                        <button onclick="onDecreaseSize()"><i class="fa-solid fa-square-minus"></i></button>
+                        <button onclick="onIncreaseSize()"><i class="fa-solid fa-square-plus"></i></button>
+                    </section>
 
-                <section class="line line3">
-                    <label>Font:
+                    <section class="line line3">
+                        <label>Font:
                     <select class="font-select" onchange="onChangeFont(this.value)">
                             <option value="impact">Impact</option>
                             <option value="ruluko">Ruluko</option>
                             <option value="ariel">Ariel</option>
                         </select>
                     </label>
-                    <label> 
+                        <label> 
                             Color:
-                            <input class="color-input" oninput="onChangeColor(this.value)" type="color" name="color" value="#000000">
+                            <input class="color-input" oninput="onChangeColor(this.value)" type="color" name="color" value="#64113f">
                         </label>
-                </section>
+                    </section>
 
-                <section class="stickers-container line "></section>
+                    <section class="stickers-container line "></section>
 
-                <button onclick="onSaveMeme()">Save</button>
-                <button onclick="uploadImg(); clearBorder()"><i class="fa-solid fa-share-nodes"></i></button>
+                    <button onclick="onSaveMeme()">Save</button>
+                    <button onclick="uploadImg(); clearBorder()"><i class="fa-solid fa-share-nodes"></i></button>
 
-                <!-- <button onclick="onMoveLeft()"><-</button>
+                    <!-- <button onclick="onMoveLeft()"><-</button>
                     <button onclick="onMoveRight()">-></button> -->
-            </section>
+                </section>
+            </div>
 
             <section class="canvas-container">
                 <canvas id="my-canvas" height="300" width="300"></canvas>

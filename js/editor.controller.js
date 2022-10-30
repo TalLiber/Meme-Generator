@@ -88,14 +88,14 @@ function renderText(meme) {
     })
 }
 
-function drawText(text, x, y, textSize, textColor = '#000000', textFont = 'impact') {
+function drawText(text, x, y, textSize, textColor = '#fff', textFont = 'impact') {
     //TODO: add stroke
+    gCtx.font = `${textSize}px ${textFont}`
     gCtx.lineWidth = 2
         // gCtx.strokeStyle = 'brown'
     gCtx.fillStyle = textColor
 
-    gCtx.font = `${textSize}px ${textFont}`
-        // gCtx.textAlign = 'center'
+    // gCtx.textAlign = 'center'
     gCtx.textBaseline = 'top'
     gCtx.fillText(text, x, y)
         // gCtx.strokeText(text, x, y)
