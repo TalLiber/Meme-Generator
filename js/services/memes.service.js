@@ -65,7 +65,7 @@ function switchLines() {
 
 function addLine(offsetX) {
     gMeme.lines.push({
-        txt: 'Enter Text',
+        txt: '',
         size: 30,
         align: 'center',
         color: '#fff',

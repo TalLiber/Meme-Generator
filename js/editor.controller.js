@@ -177,7 +177,7 @@ async function onSaveMeme() {
 function _updateInputs(meme) {
     if (!meme.lines.length) {
         document.querySelector('.txt-input').value = ''
-        document.querySelector('.color-input').value = '#000000'
+        document.querySelector('.color-input').value = '#ffffff'
         document.querySelector('.font-select').value = 'ariel'
     } else {
         const currLine = getCurrLine()
@@ -262,9 +262,8 @@ function newImage(url) {
 }
 
 function resizeCanvas(width, height) {
-    gElCanvas.width = 350
-    if (!width) gElCanvas.height = 350
-    else gElCanvas.height = ((350 * height) / width)
+    gElCanvas.width = (window.innerWidth >= 900) ? 500 : 350
+    gElCanvas.height = ((gElCanvas.width * height) / width)
 }
 
 function getEvPos(ev) {
