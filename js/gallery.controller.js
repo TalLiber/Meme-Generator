@@ -71,7 +71,8 @@ function onClickedFilterItem(item) {
     const currentSize = parseFloat(style);
     item.style.fontSize = (currentSize + 1) + 'px';
 
-    onSetFilterByTxt(item.innerText)
+    var innerTxt = (item.innerText === 'All') ? '' : item.innerText
+    onSetFilterByTxt(innerTxt)
 }
 
 function onImgInput(ev) {

@@ -171,6 +171,7 @@ async function onSaveMeme() {
 
     const imgDataUrl = gElCanvas.toDataURL("image/jpeg")
     saveMeme(imgDataUrl)
+    flashMsg(`Meme saved`)
 }
 
 function _updateInputs(meme) {
@@ -334,4 +335,13 @@ function downloadImg(elLink) {
 function clearBorder() {
     clearSelection()
     renderMeme()
+}
+
+function flashMsg(msg) {
+    const el = document.querySelector('.user-msg')
+    el.innerText = msg
+    el.classList.add('open')
+    setTimeout(() => {
+        el.classList.remove('open')
+    }, 3000)
 }

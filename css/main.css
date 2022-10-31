@@ -332,6 +332,10 @@ input[type="color"] {
 
 /* images */
 
+.imgs-container {
+    flex-grow: 1;
+}
+
 .gallery-img {
     cursor: pointer;
     border-radius: 25px;
@@ -363,7 +367,6 @@ input[type="color"] {
 
 .border-container {
     align-items: center;
-    padding: 1.875em;
 }
 
 .edit-container {
@@ -372,6 +375,7 @@ input[type="color"] {
     align-items: center;
     justify-content: center;
     grid-area: down;
+    padding: 1.875em;
     border: 0.5px solid var(--clr5);
 }
 
@@ -389,6 +393,19 @@ input[type="color"] {
 
 canvas {
     border-radius: 20px;
+}
+
+.user-msg {
+    position: fixed;
+    bottom: -100px;
+    right: 10px;
+    background-color: transparent;
+    padding: 10px;
+}
+
+.user-msg.open {
+    bottom: 10px;
+    transition: bottom .5s;
 }
 
 
@@ -526,10 +543,10 @@ body.menu-open .main-screen {
     }
     .filter-container {
         padding-block: 0.625em;
-        padding-inline: 5.5em;
+        padding-inline: 2.25em;
     }
-    .filter-list {
-        flex-basis: 445px;
+    .gallery-container .filter-list {
+        flex-basis: 550px;
     }
     .filter-list>ul {
         align-items: center;
